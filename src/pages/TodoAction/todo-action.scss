@@ -3,7 +3,7 @@
 .toolbar {
   display: flex;
   margin-top: 24px;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
 
   @media screen and (min-width: $media-md) {

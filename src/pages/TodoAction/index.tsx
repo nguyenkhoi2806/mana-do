@@ -45,9 +45,11 @@ const TodoAction = (props: TodoActionInterface) => {
             {status}
           </button>
         ))}
-        <button className="toolbar__tabs-btn" onClick={onDeleteAllTodo}>
-          Clear all todo
-        </button>
+        {todoList && todoList.length > 0 && (
+          <button className="toolbar__tabs-btn" onClick={onDeleteAllTodo}>
+            Clear all todo
+          </button>
+        )}
       </div>
     </div>
   );
