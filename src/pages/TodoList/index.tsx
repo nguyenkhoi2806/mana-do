@@ -5,20 +5,30 @@ import './todo-list.scss';
 import Todo from '../../models/todo';
 import TotoItem from './TodoItem';
 
-export interface TodoListInterface {
+export interface TodoListProps {
+  isLoading: boolean;
   todoList: Todo[];
   handleUpdateTodoStatus: (todo: Todo, checked: boolean) => void;
   handleUpdateTodoContent: (todo: Todo, content: string) => void;
   handleDeleteTodo: (todo: Todo) => void;
 }
 
-const TodoList = (props: TodoListInterface) => {
+const TodoList = (props: TodoListProps) => {
   const {
     handleUpdateTodoStatus,
     todoList,
     handleUpdateTodoContent,
     handleDeleteTodo,
+    isLoading,
   } = props;
+
+  if (isLoading) {
+    return (
+      <div className="todo__loading">
+        <span className="todo__loading-spin" />
+      </div>
+    );
+  }
 
   return (
     <div

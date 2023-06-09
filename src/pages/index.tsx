@@ -21,14 +21,23 @@ import { filterTodoByStatus, sumTodoActive } from '../selectors/todo';
 
 const ToDo = () => {
   const [statusFilter, setStatusFilter] = useState<TodoStatus>(TodoStatus.ALL);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const todoList = useSelector(filterTodoByStatus(statusFilter));
 
   useEffect(() => {
     (async () => {
-      const resp = await Service.getTodoList();
-      dispatch(setTodoList(resp || []));
+      setLoading(true);
+      new Promise((resolve) => setTimeout(resolve, 2000))
+        .then(async () => {
+          const resp = await Service.getTodoList();
+          dispatch(setTodoList(resp || []));
+          setLoading(false);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     })();
   }, [dispatch]);
 
@@ -88,6 +97,7 @@ const ToDo = () => {
       </div>
       <div>
         <TodoList
+          isLoading={isLoading}
           todoList={todoList}
           handleUpdateTodoStatus={handleUpdateTodoStatus}
           handleUpdateTodoContent={handleUpdateTodoContent}
